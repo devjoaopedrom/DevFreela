@@ -1,9 +1,10 @@
-﻿using DevFreela.Application.Models;
-using DevFreela.Application.Services;
-using DevFreela.Core.Entities;
-using DevFreela.Infrastructure.Persistence;
+﻿using DevFreela.Application.Commands.InsertSkillUser;
+using DevFreela.Application.Commands.InsertUser;
+using DevFreela.Application.Queries.GetAllSkill;
+using DevFreela.Application.Queries.GetProjectById;
+using DevFreela.Application.Queries.GetUserById;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DevFreela.API.Controllers
 {
@@ -11,29 +12,29 @@ namespace DevFreela.API.Controllers
     [Route("api/users")]
     public class UsersController : ControllerBase
     {
-        private readonly IUserService _service;
-        public UsersController(IUserService service)
+        private readonly IMediator _mediator;
+        public UsersController(IMediator mediator)
         {
-            _service = service;
+            _mediator = mediator;
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task <IActionResult> GetById(int id)
         {
-            var result = _service.GetById(id);
+            var result = await _mediator.Send(new GetUserByIdQuery(id));
 
-            if (result is null)
+            if (!result.IsSuccess)
             {
-                return NotFound();
+                return BadRequest(result.Message);
             }
             return Ok(result);
         }
 
         // POST api/users
         [HttpPost]
-        public IActionResult Post(CreateUserInputModel model)
+        public async Task <IActionResult> Post(InsertUserCommand command)
         {
-          var result = _service.Insert(model);
+            var result = await _mediator.Send(command);
             if (!result.IsSuccess)
             {
                 BadRequest(result.Message);
@@ -43,9 +44,9 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpPost("{id}/skills")]
-        public IActionResult PostSkills(int id, UserSkillsInputModel model)
+        public async Task<IActionResult> PostSkills(InsertSkillUserCommand command)
         {
-            var result = _service.InsertSkill(id, model);
+            var result = await _mediator.Send(command);
 
             if (!result.IsSuccess) 
             {

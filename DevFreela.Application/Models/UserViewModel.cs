@@ -13,18 +13,17 @@ namespace DevFreela.Application.Models
             Skills = skills;
         }
 
-    public string FullName { get; private set; }
-    public string Email { get; private set; }
-    public DateTime BirthDate { get; private set; }
-    public List<string> Skills { get; private set; }
+        public string FullName { get; private set; }
+        public string Email { get; private set; }
+        public DateTime BirthDate { get; private set; }
+        public List<string> Skills { get; private set; }
 
-    public static UserViewModel FromEntity(User user)
-    {
-        var skills = user.Skills.Select(u => u.Skill.Description).ToList();
-
-        return new UserViewModel(user.FullName, user.Email, user.BirthDate, skills);
-    }
-    
+        public static UserViewModel FromEntity(User user)
+        {
+            // Map UserSkill objects to their Skill names
+            var skillNames = user.Skills.Select(us => us.Skill.Description).ToList();
+            return new UserViewModel(user.FullName, user.Email, user.BirthDate, skillNames);
+        }
     }
 }
 

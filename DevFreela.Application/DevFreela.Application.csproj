@@ -7,12 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DevFreela.Core\DevFreela.Core.csproj" />
-    <ProjectReference Include="..\DevFreela.Infrastructure\DevFreela.Infrastructure.csproj" />
+    <Compile Remove="NovaPasta\**" />
+    <EmbeddedResource Remove="NovaPasta\**" />
+    <None Remove="NovaPasta\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Queries\GetProjectById\" />
+    <Compile Remove="Commands\InsertProject\ValidateInsertProject.cs" />
+    <Compile Remove="Notification.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DevFreela.Core\DevFreela.Core.csproj" />
+    <ProjectReference Include="..\DevFreela.Infrastructure\DevFreela.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
