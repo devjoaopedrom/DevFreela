@@ -16,7 +16,7 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
         {
             await _context.Projects.AddAsync(project);
             await _context.SaveChangesAsync();
-
+                
             return project.Id;
         }
 

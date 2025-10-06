@@ -82,7 +82,7 @@ namespace DevFreela.API.Controllers
             {
                 return BadRequest(result.Message);
             }
-            return NoContent();
+            return NoContent(); 
         }
 
         // PUT api/projects/1234/start

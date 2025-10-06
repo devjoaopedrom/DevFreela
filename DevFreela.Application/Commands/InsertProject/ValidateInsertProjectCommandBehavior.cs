@@ -22,7 +22,7 @@ namespace DevFreela.Application.Commands.InsertProject
         public async Task<ResultViewModel<int>> Handle(InsertProjectCommand request, RequestHandlerDelegate<ResultViewModel<int>> next, CancellationToken cancellationToken)
         {
             var clientExist = _context.Users.Any(u => u.Id == request.IdClient);
-            var freelancerExists = _context.Users.Any(u => u.Id == request.IdFreelance);
+            var freelancerExists = _context.Users.Any(u => u.Id == request.IdFreelancer);
 
             if (!clientExist || !freelancerExists)
             {
