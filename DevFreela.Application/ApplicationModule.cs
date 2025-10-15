@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using DevFreela.Application.Commands.InsertProject;
+using DevFreela.Application.Commands.LoginUser;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
@@ -24,8 +21,12 @@ namespace DevFreela.Application
 
         private static IServiceCollection AddHandlers(this IServiceCollection services) 
         {
-            services.AddMediatR(config => 
-                config.RegisterServicesFromAssemblyContaining<InsertProjectCommand>());
+            services.AddMediatR(config =>
+            {
+            config.RegisterServicesFromAssemblyContaining<InsertProjectCommand>();
+            config.RegisterServicesFromAssemblyContaining<LoginUserCommand>();
+            });
+
 
             services.AddTransient<IPipelineBehavior<InsertProjectCommand, ResultViewModel<int>>, ValidateInsertProjectCommandBehavior>();
             
